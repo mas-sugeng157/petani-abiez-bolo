@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaniDigital – Komunitas Pertanian Indonesia</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --green-100: #e8f5e9;
+  --green-200: #c8e6c9;
+  --green-300: #a5d6a7;
+  --green-400: #66bb6a;
+  --green-500: #4caf50;
+  --green-600: #43a047;
+  --green-700: #388e3c;
+  --green-800: #2e7d32;
+  --green-900: #1b5e20;
+  --white: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.13);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.16);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --bg: #f4f8f4;
+  --bg-card: #ffffff;
+  --text-primary: #1b3a1b;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --border: #e2ede2;
+  --navbar-bg: rgba(255,255,255,0.92);
+  --input-bg: #f3f8f3;
+}
+[data-theme="dark"] {
+  --bg: #0f1f0f;
+  --bg-card: #1a2e1a;
+  --text-primary: #e8f5e9;
+  --text-secondary: #a5d6a7;
+  --text-muted: #66bb6a;
+  --border: #2e4d2e;
+  --navbar-bg: rgba(15,31,15,0.95);
+  --input-bg: #1f351f;
+  --gray-100: #1a2e1a;
+  --gray-50: #162616;
+  --white: #1a2e1a;
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Poppins', 'Nunito Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; }
+button { cursor: pointer; font-family: inherit; }
+ul { list-style: none; }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--green-400); border-radius: 10px; }
+
+/* ===== NAVBAR ===== */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--navbar-bg);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.3s;
+  padding: 0 2rem;
+  height: 64px;
+  display: flex; align-items: center;
+}
+#navbar.scrolled {
+  box-shadow: var(--shadow-md);
+  background: var(--navbar-bg);
+}
+.nav-inner {
+  max-width: 1400px; width: 100%; margin: 0 auto;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-weight: 800; font-size: 1.3rem;
+  color: var(--green-700);
+  flex-shrink: 0;
+}
+.nav-logo .logo-icon {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--green-500), var(--green-800));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; color: white;
+  box-shadow: 0 2px 8px rgba(76,175,80,0.3);
+}
+.nav-search {
+  flex: 1; max-width: 280px;
+  position: relative;
+}
+.nav-search input {
+  width: 100%; padding: 0.45rem 1rem 0.45rem 2.5rem;
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  background: var(--input-bg);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border 0.2s;
+}
+.nav-search input:focus { border-color: var(--green-400); }
+.nav-search .search-icon {
+  position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%);
+  color: var(--gray-400); font-size: 0.85rem;
+}
+.nav-menu {
+  display: flex; align-items: center; gap: 0.25rem;
+  flex: 1;
+}
+.nav-menu a {
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem; font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-menu a:hover, .nav-menu a.active {
+  background: var(--green-100);
+  color: var(--green-700);
+}
+[data-theme="dark"] .nav-menu a:hover,
+[data-theme="dark"] .nav-menu a.active {
+  background: rgba(76,175,80,0.15);
+  color: var(--green-300);
+}
+.nav-actions {
+  display: flex; align-items: center; gap: 0.5rem;
+  flex-shrink: 0;
+}
+.nav-icon-btn {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+.nav-icon-btn:hover {
+  background: var(--green-100);
+  color: var(--green-700);
+  border-color: var(--green-300);
+}
+.hamburger {
+  display: none;
+  flex-direction: column; gap: 5px;
+  background: none; border: none;
+  padding: 6px;
+}
+.hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--text-primary); border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* ===== FLOATING WIDGET (right side) ===== */
+#float-widget {
+  position: fixed; top: 80px; right: 1rem; z-index: 999;
+  display: flex; flex-direction: column; gap: 0.5rem;
+}
+.float-btn {
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; color: var(--green-700);
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(8px);
+  position: relative;
+}
+.float-btn:hover {
+  background: var(--green-500);
+  color: white;
+  border-color: var(--green-500);
+  transform: scale(1.08);
+}
+.float-tooltip {
+  position: absolute; right: 54px; top: 50%; transform: translateY(-50%);
+  background: var(--gray-800); color: white;
+  padding: 4px 10px; border-radius: 6px;
+  font-size: 0.75rem; white-space: nowrap;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s;
+}
+.float-btn:hover .float-tooltip { opacity: 1; }
+#live-time {
+  font-size: 0.65rem; font-weight: 600;
+  color: var(--green-700); text-align: center; line-height: 1.2;
+}
+[data-theme="dark"] #live-time { color: var(--green-300); }
+
+/* ===== FLOATING POPUPS ===== */
+.float-popup {
+  position: fixed; right: 4rem; top: 80px; z-index: 1100;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xl);
+  padding: 1.25rem;
+  width: 280px;
+  display: none;
+  animation: slideIn 0.2s ease;
+}
+.float-popup.active { display: block; }
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.popup-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem;
+  font-weight: 700; font-size: 0.95rem;
+}
+.popup-close {
+  background: none; border: none;
+  color: var(--gray-400); font-size: 1.1rem;
+  cursor: pointer;
+}
+/* Calculator */
+.calc-display {
+  background: var(--input-bg);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-size: 1.3rem; font-weight: 700;
+  text-align: right; color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  min-height: 50px; word-break: break-all;
+}
+.calc-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 6px;
+}
+.calc-btn {
+  padding: 0.6rem; border-radius: 8px; border: none;
+  font-size: 0.85rem; font-weight: 600;
+  background: var(--input-bg); color: var(--text-primary);
+  transition: all 0.15s;
+}
+.calc-btn:hover { background: var(--green-100); color: var(--green-700); }
+.calc-btn.op { background: var(--green-100); color: var(--green-700); }
+.calc-btn.eq { background: var(--green-500); color: white; grid-column: span 2; }
+.calc-btn.cl { background: #fee2e2; color: #ef4444; }
+/* Weather */
+.weather-card {
+  background: linear-gradient(135deg, var(--green-600), var(--green-800));
+  border-radius: var(--radius-sm); padding: 1rem; color: white; text-align: center;
+}
+.weather-temp { font-size: 2.5rem; font-weight: 800; }
+.weather-city { font-size: 0.85rem; opacity: 0.85; }
+
+/* ===== PAGE SYSTEM ===== */
+.page { display: none; padding-top: 64px; min-height: 100vh; }
+.page.active { display: block; }
+
+/* ===== MOBILE DRAWER ===== */
+#mobile-drawer {
+  position: fixed; top: 64px; left: 0; right: 0; z-index: 998;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem;
+  display: none;
+  flex-direction: column; gap: 0.25rem;
+  box-shadow: var(--shadow-lg);
+}
+#mobile-drawer.open { display: flex; }
+#mobile-drawer a {
+  padding: 0.65rem 1rem; border-radius: var(--radius-sm);
+  font-size: 0.9rem; font-weight: 500; color: var(--text-secondary);
+  transition: all 0.2s;
+}
+#mobile-drawer a:hover { background: var(--green-100); color: var(--green-700); }
+
+/* ===== SECTION UTILS ===== */
+.section { padding: 3rem 1.5rem; max-width: 1200px; margin: 0 auto; }
+.section-title {
+  font-size: 1.6rem; font-weight: 800; color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+.section-sub { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 2rem; }
+.badge {
+  display: inline-block; padding: 3px 12px;
+  border-radius: 50px; font-size: 0.75rem; font-weight: 600;
+  background: var(--green-100); color: var(--green-700);
+}
+[data-theme="dark"] .badge { background: rgba(76,175,80,0.2); color: var(--green-300); }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.65rem 1.5rem; border-radius: 50px; border: none;
+  font-size: 0.9rem; font-weight: 600; cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-primary { background: var(--green-500); color: white; }
+.btn-primary:hover { background: var(--green-700); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(76,175,80,0.35); }
+.btn-outline {
+  background: transparent; color: var(--green-700);
+  border: 2px solid var(--green-500);
+}
+.btn-outline:hover { background: var(--green-500); color: white; }
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s;
+  overflow: hidden;
+}
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.25rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; }
+.stars { color: #f59e0b; font-size: 0.85rem; }
+
+/* ===== HOME PAGE ===== */
+.hero {
+  background: linear-gradient(135deg, #e8f5e9 0%, #f0faf0 40%, #e0f2e0 100%);
+  padding: 5rem 1.5rem 4rem;
+  position: relative; overflow: hidden;
+}
+[data-theme="dark"] .hero {
+  background: linear-gradient(135deg, #0a1a0a 0%, #0f1f0f 60%, #0d1e0d 100%);
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; right: 0; left: 0; bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(76,175,80,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(56,142,60,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+}
+.hero-label {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(76,175,80,0.1); border: 1px solid rgba(76,175,80,0.2);
+  padding: 6px 14px; border-radius: 50px;
+  font-size: 0.8rem; font-weight: 600; color: var(--green-700);
+  margin-bottom: 1rem;
+}
+.hero h1 {
+  font-size: 2.6rem; font-weight: 800; line-height: 1.2;
+  color: var(--text-primary); margin-bottom: 1rem;
+}
+.hero h1 span { color: var(--green-600); }
+.hero p {
+  font-size: 1rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.7;
+}
+.hero-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.hero-visual {
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-3d {
+  width: 360px; height: 360px;
+  background: linear-gradient(135deg, var(--green-400), var(--green-700));
+  border-radius: 50% 40% 50% 40%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  box-shadow: 0 32px 80px rgba(76,175,80,0.25);
+  animation: floatAnim 4s ease-in-out infinite;
+}
+@keyframes floatAnim {
+  0%,100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(2deg); }
+}
+.hero-3d-inner { font-size: 8rem; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.2)); }
+.hero-3d::after {
+  content: '';
+  position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+  width: 200px; height: 20px;
+  background: radial-gradient(ellipse, rgba(76,175,80,0.25) 0%, transparent 70%);
+}
+/* Floating decoration bubbles */
+.hero-bubble {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: bubbleFloat 6s ease-in-out infinite;
+}
+@keyframes bubbleFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+/* Stats row */
+.stats-row {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem;
+  max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem;
+}
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem; text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+.stat-num { font-size: 2rem; font-weight: 800; color: var(--green-600); }
+.stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
+/* Tips slider */
+.tips-section { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.5rem; }
+.tips-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 1rem; }
+.tips-label {
+  background: var(--green-500); color: white;
+  padding: 4px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600;
+  white-space: nowrap;
+}
+.tips-text { font-size: 0.9rem; color: var(--text-secondary); animation: tipsFade 8s infinite; }
+@keyframes tipsFade { 0%,100%{opacity:1} 45%,55%{opacity:0} }
+/* Features grid */
+.feature-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-top: 1.5rem; }
+.feature-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 1.5rem;
+  box-shadow: var(--shadow-sm); transition: all 0.25s;
+}
+.feature-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--green-300); }
+.feature-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin-bottom: 1rem;
+}
+.feature-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.feature-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+/* ===== FORUM ===== */
+.forum-layout { display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem; }
+.forum-sidebar .card { padding: 1.25rem; }
+.group-card {
+  padding: 1rem; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); cursor: pointer;
+  transition: all 0.2s; margin-bottom: 0.75rem;
+  background: var(--bg-card);
+}
+.group-card:hover, .group-card.active {
+  border-color: var(--green-400); background: var(--green-100);
+}
+[data-theme="dark"] .group-card:hover,
+[data-theme="dark"] .group-card.active {
+  background: rgba(76,175,80,0.1);
+}
+.group-name { font-weight: 600; font-size: 0.9rem; }
+.group-meta { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+.post-card { padding: 1.25rem; margin-bottom: 1rem; }
+.post-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--green-400), var(--green-700));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 700; font-size: 0.9rem; flex-shrink: 0;
+}
+.post-meta { font-size: 0.8rem; color: var(--text-muted); }
+.post-content { font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem; color: var(--text-secondary); }
+.post-actions { display: flex; gap: 1rem; }
+.post-action-btn {
+  background: none; border: none; font-size: 0.82rem;
+  color: var(--text-muted); display: flex; align-items: center; gap: 0.3rem;
+  cursor: pointer; transition: color 0.2s;
+}
+.post-action-btn:hover { color: var(--green-600); }
+.comment-input { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+.comment-input input {
+  flex: 1; padding: 0.5rem 1rem; border-radius: 50px;
+  border: 1.5px solid var(--border); background: var(--input-bg);
+  font-size: 0.85rem; color: var(--text-primary); outline: none;
+}
+.comment-input input:focus { border-color: var(--green-400); }
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+  display: none; align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--bg-card); border-radius: var(--radius-lg);
+  padding: 2rem; width: 90%; max-width: 440px;
+  box-shadow: var(--shadow-xl);
+  animation: modalIn 0.25s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.modal h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.25rem; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text-secondary); }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 0.65rem 1rem;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--input-bg); color: var(--text-primary);
+  font-size: 0.9rem; font-family: inherit; outline: none;
+  transition: border 0.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--green-400);
+}
+.form-group textarea { resize: vertical; min-height: 80px; }
+.modal-btns { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.25rem; }
+
+/* ===== PRODUCTS ===== */
+.product-filters {
+  display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;
+}
+.filter-btn {
+  padding: 0.4rem 1rem; border-radius: 50px;
+  border: 1.5px solid var(--border); background: var(--bg-card);
+  font-size: 0.82rem; font-weight: 600; color: var(--text-secondary);
+  cursor: pointer; transition: all 0.2s;
+}
+.filter-btn.active, .filter-btn:hover {
+  background: var(--green-500); color: white; border-color: var(--green-500);
+}
+.products-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; }
+.product-card { overflow: hidden; }
+.product-img {
+  height: 160px; background: linear-gradient(135deg, var(--green-100), var(--green-200));
+  display: flex; align-items: center; justify-content: center; font-size: 4rem;
+  position: relative;
+}
+[data-theme="dark"] .product-img { background: linear-gradient(135deg, #1a3020, #1f3826); }
+.product-wishlist {
+  position: absolute; top: 8px; right: 8px;
+  width: 32px; height: 32px; border-radius: 50%; background: white;
+  border: none; display: flex; align-items: center; justify-content: center;
+  color: var(--gray-400); cursor: pointer; transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+.product-wishlist:hover { color: #ef4444; transform: scale(1.1); }
+.product-info { padding: 1rem; }
+.product-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.3rem; }
+.product-price { color: var(--green-600); font-weight: 800; font-size: 1rem; margin-bottom: 0.5rem; }
+.product-rating { display: flex; align-items: center; gap: 0.3rem; font-size: 0.78rem; color: var(--text-muted); }
+.product-metrics { display: flex; flex-direction: column; gap: 4px; margin: 0.5rem 0; }
+.metric-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; }
+.metric-label { color: var(--text-muted); width: 70px; }
+.metric-bar { flex: 1; height: 5px; background: var(--gray-200); border-radius: 50px; overflow: hidden; }
+.metric-fill { height: 100%; background: var(--green-500); border-radius: 50px; transition: width 0.5s; }
+.metric-val { font-weight: 700; color: var(--green-700); font-size: 0.78rem; }
+.product-actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+.btn-cart {
+  flex: 1; padding: 0.5rem; border-radius: var(--radius-sm);
+  background: var(--green-500); color: white; border: none;
+  font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.btn-cart:hover { background: var(--green-700); }
+
+/* ===== CATATAN / NOTES ===== */
+.notes-layout { display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; }
+.calendar-widget {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 1.25rem;
+}
+.cal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem; font-weight: 700;
+}
+.cal-nav { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1rem; }
+.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+.cal-day-name { text-align: center; font-size: 0.72rem; font-weight: 600; color: var(--text-muted); padding: 4px 0; }
+.cal-day {
+  text-align: center; padding: 6px 2px; border-radius: 6px;
+  font-size: 0.82rem; cursor: pointer; transition: all 0.15s;
+}
+.cal-day:hover { background: var(--green-100); color: var(--green-700); }
+.cal-day.today { background: var(--green-500); color: white; font-weight: 700; }
+.cal-day.has-note { position: relative; }
+.cal-day.has-note::after {
+  content: '•'; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+  color: var(--green-500); font-size: 0.6rem;
+}
+.note-item {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-md); padding: 1rem; margin-bottom: 0.75rem;
+  border-left: 4px solid var(--green-500);
+  cursor: pointer; transition: all 0.2s;
+}
+.note-item:hover { box-shadow: var(--shadow-md); }
+.note-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.3rem; }
+.note-body { font-size: 0.82rem; color: var(--text-secondary); }
+.note-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem; }
+.reminder-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.75rem; border-radius: var(--radius-sm);
+  background: var(--input-bg); margin-bottom: 0.5rem;
+}
+.reminder-icon { font-size: 1.2rem; }
+.reminder-text { font-size: 0.85rem; }
+.reminder-time { font-size: 0.75rem; color: var(--text-muted); }
+
+/* ===== BERITA / NEWS ===== */
+.news-layout { display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; }
+.news-featured .card { display: grid; grid-template-columns: 1fr 1fr; min-height: 280px; overflow: hidden; }
+.news-img {
+  background: linear-gradient(135deg, var(--green-600), var(--green-900));
+  display: flex; align-items: center; justify-content: center; font-size: 6rem;
+}
+.news-content { padding: 1.5rem; }
+.breaking-badge {
+  background: #ef4444; color: white; font-size: 0.72rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 50px; display: inline-block; margin-bottom: 0.75rem;
+}
+.news-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+.news-excerpt { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+.news-meta { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.75rem; }
+.news-list-item {
+  padding: 1rem; display: flex; gap: 1rem; align-items: flex-start;
+  border-bottom: 1px solid var(--border); cursor: pointer;
+  transition: background 0.2s;
+}
+.news-list-item:hover { background: var(--green-100); }
+[data-theme="dark"] .news-list-item:hover { background: rgba(76,175,80,0.08); }
+.news-thumb {
+  width: 72px; height: 60px; border-radius: var(--radius-sm);
+  background: var(--green-200); display: flex; align-items: center;
+  justify-content: center; font-size: 2rem; flex-shrink: 0;
+}
+[data-theme="dark"] .news-thumb { background: #1f3826; }
+.news-item-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 0.25rem; }
+.news-item-meta { font-size: 0.75rem; color: var(--text-muted); }
+
+/* ===== CHAT ===== */
+.chat-layout { display: grid; grid-template-columns: 300px 1fr; gap: 0; height: calc(100vh - 64px); }
+.chat-sidebar {
+  border-right: 1px solid var(--border); background: var(--bg-card);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.chat-sidebar-header { padding: 1.25rem; border-bottom: 1px solid var(--border); }
+.chat-sidebar-header h3 { font-weight: 700; font-size: 1rem; margin-bottom: 0.75rem; }
+.chat-search {
+  position: relative;
+}
+.chat-search input {
+  width: 100%; padding: 0.5rem 1rem 0.5rem 2.2rem;
+  border: 1.5px solid var(--border); border-radius: 50px;
+  background: var(--input-bg); font-size: 0.82rem; color: var(--text-primary); outline: none;
+}
+.chat-search input:focus { border-color: var(--green-400); }
+.chat-search i { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--gray-400); font-size: 0.82rem; }
+.chat-list { flex: 1; overflow-y: auto; }
+.chat-item {
+  padding: 0.85rem 1.25rem; display: flex; gap: 0.75rem; align-items: center;
+  cursor: pointer; transition: background 0.2s; border-bottom: 1px solid var(--border);
+}
+.chat-item:hover, .chat-item.active { background: var(--green-100); }
+[data-theme="dark"] .chat-item:hover, [data-theme="dark"] .chat-item.active { background: rgba(76,175,80,0.1); }
+.chat-avatar { position: relative; }
+.online-dot {
+  width: 10px; height: 10px; background: #22c55e;
+  border: 2px solid var(--bg-card); border-radius: 50%;
+  position: absolute; bottom: 0; right: 0;
+}
+.chat-name { font-weight: 600; font-size: 0.88rem; }
+.chat-preview { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chat-time { font-size: 0.72rem; color: var(--text-muted); margin-left: auto; flex-shrink: 0; }
+.chat-main {
+  display: flex; flex-direction: column; background: var(--bg);
+}
+.chat-header {
+  padding: 1rem 1.5rem; background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.chat-status { font-size: 0.78rem; color: #22c55e; }
+.chat-messages { flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+.msg-bubble { max-width: 65%; }
+.msg-bubble.sent { align-self: flex-end; }
+.msg-bubble.recv { align-self: flex-start; }
+.bubble-content {
+  padding: 0.65rem 1rem; border-radius: 18px; font-size: 0.88rem; line-height: 1.5;
+}
+.msg-bubble.sent .bubble-content { background: var(--green-500); color: white; border-bottom-right-radius: 4px; }
+.msg-bubble.recv .bubble-content { background: var(--bg-card); color: var(--text-primary); border-bottom-left-radius: 4px; box-shadow: var(--shadow-sm); }
+.msg-time { font-size: 0.7rem; color: var(--text-muted); margin-top: 3px; }
+.msg-bubble.sent .msg-time { text-align: right; }
+.chat-input-area {
+  padding: 1rem 1.5rem; background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.chat-input-area input {
+  flex: 1; padding: 0.65rem 1.25rem;
+  border: 1.5px solid var(--border); border-radius: 50px;
+  background: var(--input-bg); font-size: 0.88rem; color: var(--text-primary); outline: none;
+}
+.chat-input-area input:focus { border-color: var(--green-400); }
+.chat-send-btn {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--green-500); color: white; border: none;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  transition: all 0.2s;
+}
+.chat-send-btn:hover { background: var(--green-700); transform: scale(1.05); }
+.chat-attach-btn {
+  background: none; border: none; color: var(--gray-400); font-size: 1.1rem; cursor: pointer;
+  transition: color 0.2s;
+}
+.chat-attach-btn:hover { color: var(--green-500); }
+
+/* ===== SETTINGS ===== */
+.settings-layout { display: grid; grid-template-columns: 240px 1fr; gap: 1.5rem; }
+.settings-nav { display: flex; flex-direction: column; gap: 0.25rem; }
+.settings-nav-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.7rem 1rem; border-radius: var(--radius-sm);
+  font-size: 0.88rem; cursor: pointer; transition: all 0.2s;
+  color: var(--text-secondary);
+}
+.settings-nav-item:hover, .settings-nav-item.active {
+  background: var(--green-100); color: var(--green-700);
+}
+[data-theme="dark"] .settings-nav-item:hover,
+[data-theme="dark"] .settings-nav-item.active {
+  background: rgba(76,175,80,0.12);
+}
+.settings-panel { display: none; }
+.settings-panel.active { display: block; }
+.settings-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.25rem; }
+.toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.85rem 0; border-bottom: 1px solid var(--border);
+}
+.toggle-label { font-size: 0.9rem; }
+.toggle-desc { font-size: 0.8rem; color: var(--text-muted); }
+.toggle-switch { position: relative; width: 46px; height: 26px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-switch .slider {
+  position: absolute; cursor: pointer; inset: 0;
+  background: var(--gray-300); border-radius: 50px; transition: 0.3s;
+}
+.toggle-switch .slider::before {
+  content: ''; position: absolute;
+  width: 20px; height: 20px; border-radius: 50%; background: white;
+  left: 3px; bottom: 3px; transition: 0.3s; box-shadow: var(--shadow-sm);
+}
+.toggle-switch input:checked + .slider { background: var(--green-500); }
+.toggle-switch input:checked + .slider::before { transform: translateX(20px); }
+.theme-options { display: flex; gap: 0.75rem; }
+.theme-option {
+  padding: 0.6rem 1.25rem; border-radius: var(--radius-sm);
+  border: 2px solid var(--border); cursor: pointer; font-size: 0.85rem; font-weight: 600;
+  transition: all 0.2s; background: var(--bg-card);
+}
+.theme-option.active, .theme-option:hover {
+  border-color: var(--green-500); color: var(--green-600);
+  background: var(--green-100);
+}
+[data-theme="dark"] .theme-option.active,
+[data-theme="dark"] .theme-option:hover {
+  background: rgba(76,175,80,0.12);
+}
+.lang-options { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.lang-option {
+  padding: 0.5rem 1rem; border-radius: var(--radius-sm);
+  border: 2px solid var(--border); cursor: pointer; font-size: 0.85rem;
+  transition: all 0.2s; background: var(--bg-card);
+}
+.lang-option.active { border-color: var(--green-500); color: var(--green-600); background: var(--green-100); }
+.profile-avatar-big {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--green-400), var(--green-700));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; color: white; font-weight: 700; margin-bottom: 1rem;
+}
+
+/* ===== AI PAGE ===== */
+.ai-page {
+  display: flex; align-items: center; justify-content: center;
+  min-height: calc(100vh - 64px); text-align: center; padding: 2rem;
+}
+.ai-coming {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); padding: 3rem; max-width: 500px;
+  box-shadow: var(--shadow-lg);
+}
+.ai-icon {
+  font-size: 5rem; margin-bottom: 1.5rem;
+  animation: aiPulse 2s ease-in-out infinite;
+}
+@keyframes aiPulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+.ai-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.75rem; }
+.ai-text { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; }
+.ai-badge {
+  display: inline-block; margin-top: 1.25rem;
+  background: linear-gradient(135deg, var(--green-500), var(--green-700));
+  color: white; padding: 8px 20px; border-radius: 50px;
+  font-size: 0.85rem; font-weight: 600;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--green-900);
+  color: #e8f5e9; padding: 3rem 1.5rem 1.5rem;
+  margin-top: 4rem;
+}
+[data-theme="dark"] footer { background: #060f06; }
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem;
+  margin-bottom: 2rem;
+}
+.footer-brand p { font-size: 0.85rem; opacity: 0.7; margin-top: 0.75rem; line-height: 1.7; }
+.footer-col h4 { font-weight: 700; font-size: 0.9rem; margin-bottom: 1rem; }
+.footer-col a {
+  display: block; font-size: 0.83rem; opacity: 0.7;
+  margin-bottom: 0.5rem; transition: opacity 0.2s; cursor: pointer;
+}
+.footer-col a:hover { opacity: 1; color: var(--green-300); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1.5rem; text-align: center;
+  font-size: 0.82rem; opacity: 0.6;
+  max-width: 1200px; margin: 0 auto;
+}
+.social-row { display: flex; gap: 0.75rem; margin-top: 1rem; }
+.social-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: all 0.2s; cursor: pointer;
+}
+.social-btn:hover { background: var(--green-500); }
+
+/* ===== FAQ ===== */
+.faq-item { border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 0.75rem; overflow: hidden; }
+.faq-question {
+  padding: 1rem 1.25rem; font-weight: 600; font-size: 0.9rem;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; background: var(--bg-card); transition: background 0.2s;
+  user-select: none;
+}
+.faq-question:hover { background: var(--green-100); }
+[data-theme="dark"] .faq-question:hover { background: rgba(76,175,80,0.1); }
+.faq-answer {
+  padding: 0 1.25rem; max-height: 0; overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s;
+  font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;
+  background: var(--bg-card);
+}
+.faq-answer.open { max-height: 300px; padding: 0 1.25rem 1rem; }
+
+/* ===== TOAST ===== */
+#toast {
+  position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  background: var(--green-800); color: white;
+  padding: 0.65rem 1.5rem; border-radius: 50px;
+  font-size: 0.85rem; font-weight: 600;
+  box-shadow: var(--shadow-lg); z-index: 9999;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+#toast.show { opacity: 1; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .products-grid { grid-template-columns: repeat(3,1fr); }
+  .grid-4 { grid-template-columns: repeat(2,1fr); }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .hero-3d { width: 280px; height: 280px; }
+  .hero h1 { font-size: 2rem; }
+}
+@media (max-width: 768px) {
+  .nav-menu { display: none; }
+  .nav-search { display: none; }
+  .hamburger { display: flex; }
+  .hero-inner { grid-template-columns: 1fr; text-align: center; }
+  .hero-visual { order: -1; }
+  .hero-btns { justify-content: center; }
+  .hero h1 { font-size: 1.8rem; }
+  .stats-row { grid-template-columns: repeat(2,1fr); }
+  .feature-grid { grid-template-columns: repeat(2,1fr); }
+  .forum-layout { grid-template-columns: 1fr; }
+  .products-grid { grid-template-columns: repeat(2,1fr); }
+  .news-layout { grid-template-columns: 1fr; }
+  .chat-layout { grid-template-columns: 1fr; }
+  .chat-sidebar { display: none; }
+  .notes-layout { grid-template-columns: 1fr; }
+  .settings-layout { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .news-featured .card { grid-template-columns: 1fr; }
+  #float-widget { top: auto; bottom: 1rem; right: 0.75rem; }
+  .float-popup { right: 4rem; bottom: 1rem; top: auto; }
+  .hero-3d { width: 220px; height: 220px; }
+}
+@media (max-width: 480px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .feature-grid { grid-template-columns: 1fr; }
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .hero h1 { font-size: 1.5rem; }
+  #float-widget { display: none; }
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.5s, transform 0.5s; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== GRUP PAGE ===== */
+.grup-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-top: 1.5rem; }
+.grup-card { overflow: hidden; }
+.grup-cover {
+  height: 100px; display: flex; align-items: center; justify-content: center;
+  font-size: 3.5rem;
+}
+.grup-info { padding: 1rem; }
+.grup-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem; }
+.grup-members { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+.grup-privacy {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  font-size: 0.75rem; font-weight: 600; padding: 2px 10px; border-radius: 50px;
+}
+.grup-privacy.public { background: var(--green-100); color: var(--green-700); }
+.grup-privacy.private { background: #fef3c7; color: #d97706; }
+[data-theme="dark"] .grup-privacy.private { background: rgba(217,119,6,0.15); }
+[data-theme="dark"] .grup-privacy.public { background: rgba(76,175,80,0.15); }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="logo-icon"><i class="fa-solid fa-seedling"></i></div>
+      TaniDigital
+    </div>
+    <div class="nav-search">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" placeholder="Cari informasi pertanian...">
+    </div>
+    <div class="nav-menu" id="navMenu">
+      <a href="#" class="active" onclick="showPage('home',this)">🏠 Home</a>
+      <a href="#" onclick="showPage('forum',this)">💬 Forum</a>
+      <a href="#" onclick="showPage('produk',this)">🛒 Produk</a>
+      <a href="#" onclick="showPage('catatan',this)">📋 Catatan</a>
+      <a href="#" onclick="showPage('berita',this)">📰 Berita</a>
+      <a href="#" onclick="showPage('ai',this)">🤖 AI</a>
+      <a href="#" onclick="showPage('grup',this)">👥 Grup</a>
+      <a href="#" onclick="showPage('settings',this)">⚙️ Tentang</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" onclick="showPage('chat',null)" title="Chat"><i class="fa-solid fa-comment-dots"></i></button>
+      <button class="nav-icon-btn" id="notifBtn" title="Notifikasi"><i class="fa-solid fa-bell"></i></button>
+      <button class="hamburger" id="hamBtn" onclick="toggleDrawer()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div id="mobile-drawer">
+  <a href="#" onclick="showPage('home',null);toggleDrawer()">🏠 Home</a>
+  <a href="#" onclick="showPage('forum',null);toggleDrawer()">💬 Forum Diskusi</a>
+  <a href="#" onclick="showPage('produk',null);toggleDrawer()">🛒 Produk & Saran</a>
+  <a href="#" onclick="showPage('catatan',null);toggleDrawer()">📋 Catatan</a>
+  <a href="#" onclick="showPage('berita',null);toggleDrawer()">📰 Berita</a>
+  <a href="#" onclick="showPage('ai',null);toggleDrawer()">🤖 AI</a>
+  <a href="#" onclick="showPage('grup',null);toggleDrawer()">👥 Grup</a>
+  <a href="#" onclick="showPage('chat',null);toggleDrawer()">💬 Chat</a>
+  <a href="#" onclick="showPage('settings',null);toggleDrawer()">⚙️ Pengaturan</a>
+</div>
+
+<!-- ===== FLOATING WIDGET ===== -->
+<div id="float-widget">
+  <button class="float-btn" onclick="togglePopup('calc-popup')">
+    <i class="fa-solid fa-calculator"></i>
+    <span class="float-tooltip">Kalkulator</span>
+  </button>
+  <button class="float-btn" onclick="togglePopup('weather-popup')">
+    <i class="fa-solid fa-cloud-sun"></i>
+    <span class="float-tooltip">Cuaca</span>
+  </button>
+  <button class="float-btn" style="flex-direction:column;height:auto;padding:6px;">
+    <div id="live-time">--:--<br><span style="font-size:0.55rem">---</span></div>
+    <span class="float-tooltip">Jam & Tanggal</span>
+  </button>
+  <button class="float-btn" onclick="showPage('settings',null)">
+    <i class="fa-solid fa-user"></i>
+    <span class="float-tooltip">Profil</span>
+  </button>
+</div>
+
+<!-- Calculator Popup -->
+<div class="float-popup" id="calc-popup">
+  <div class="popup-header">
+    <span>🧮 Kalkulator</span>
+    <button class="popup-close" onclick="togglePopup('calc-popup')"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="calc-display" id="calcDisplay">0</div>
+  <div class="calc-grid">
+    <button class="calc-btn cl" onclick="calcAction('C')">C</button>
+    <button class="calc-btn op" onclick="calcAction('±')">±</button>
+    <button class="calc-btn op" onclick="calcAction('%')">%</button>
+    <button class="calc-btn op" onclick="calcAction('/')">÷</button>
+    <button class="calc-btn" onclick="calcAction('7')">7</button>
+    <button class="calc-btn" onclick="calcAction('8')">8</button>
+    <button class="calc-btn" onclick="calcAction('9')">9</button>
+    <button class="calc-btn op" onclick="calcAction('*')">×</button>
+    <button class="calc-btn" onclick="calcAction('4')">4</button>
+    <button class="calc-btn" onclick="calcAction('5')">5</button>
+    <button class="calc-btn" onclick="calcAction('6')">6</button>
+    <button class="calc-btn op" onclick="calcAction('-')">−</button>
+    <button class="calc-btn" onclick="calcAction('1')">1</button>
+    <button class="calc-btn" onclick="calcAction('2')">2</button>
+    <button class="calc-btn" onclick="calcAction('3')">3</button>
+    <button class="calc-btn op" onclick="calcAction('+')">+</button>
+    <button class="calc-btn" onclick="calcAction('0')" style="grid-column:span 2">0</button>
+    <button class="calc-btn" onclick="calcAction('.')">.</button>
+    <button class="calc-btn eq" onclick="calcAction('=')">=</button>
+  </div>
+</div>
+
+<!-- Weather Popup -->
+<div class="float-popup" id="weather-popup">
+  <div class="popup-header">
+    <span>🌤️ Cuaca Pertanian</span>
+    <button class="popup-close" onclick="togglePopup('weather-popup')"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="weather-card">
+    <div style="font-size:3rem;margin-bottom:4px">⛅</div>
+    <div class="weather-temp">28°C</div>
+    <div class="weather-city">Jawa Timur, Indonesia</div>
+    <div style="font-size:0.8rem;opacity:0.8;margin-top:6px">Berawan sebagian · Kelembaban 75%</div>
+  </div>
+  <div style="margin-top:0.75rem;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center">
+    <div style="font-size:0.72rem;color:var(--text-muted)">Angin<br><b style="color:var(--text-primary)">12km/h</b></div>
+    <div style="font-size:0.72rem;color:var(--text-muted)">UV<br><b style="color:var(--text-primary)">Sedang</b></div>
+    <div style="font-size:0.72rem;color:var(--text-muted)">Hujan<br><b style="color:var(--text-primary)">20%</b></div>
+    <div style="font-size:0.72rem;color:var(--text-muted)">Tanah<br><b style="color:var(--text-primary)">Lembab</b></div>
+  </div>
+  <div style="margin-top:0.75rem;padding:0.5rem;background:var(--green-100);border-radius:8px;font-size:0.78rem;color:var(--green-700)">
+    💡 <b>Rekomendasi:</b> Hari baik untuk penyiangan. Hindari pemupukan sore hari.
+  </div>
+</div>
+
+<!-- ===== GROUP MODAL ===== -->
+<div class="modal-overlay" id="addGroupModal">
+  <div class="modal">
+    <h3>➕ Tambah Grup</h3>
+    <div class="form-group">
+      <label>Nama Grup</label>
+      <input type="text" id="newGroupName" placeholder="Nama komunitas...">
+    </div>
+    <div class="form-group">
+      <label>Kategori</label>
+      <select id="newGroupCat">
+        <option>Padi & Beras</option>
+        <option>Sayuran</option>
+        <option>Buah-buahan</option>
+        <option>Ternak</option>
+        <option>Teknologi Pertanian</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Jenis Grup</label>
+      <select id="newGroupType">
+        <option value="public">🌐 Publik – Semua bisa bergabung</option>
+        <option value="private">🔒 Privat – Butuh kode undangan</option>
+      </select>
+    </div>
+    <div class="form-group" id="codeGroupWrap" style="display:none">
+      <label>Kode Undangan</label>
+      <input type="text" id="newGroupCode" placeholder="Contoh: TANI2024">
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="closeModal('addGroupModal')">Batal</button>
+      <button class="btn btn-primary" onclick="createGroup()">Buat Grup</button>
+    </div>
+  </div>
+</div>
+
+<!-- Join Private Group Modal -->
+<div class="modal-overlay" id="joinPrivateModal">
+  <div class="modal">
+    <h3>🔒 Masuk Grup Privat</h3>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:1rem">Masukkan kode undangan dari admin grup.</p>
+    <div class="form-group">
+      <label>Kode Undangan</label>
+      <input type="text" id="joinCode" placeholder="Masukkan kode...">
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="closeModal('joinPrivateModal')">Batal</button>
+      <button class="btn btn-primary" onclick="joinPrivate()">Gabung</button>
+    </div>
+  </div>
+</div>
+
+<!-- Note Modal -->
+<div class="modal-overlay" id="noteModal">
+  <div class="modal">
+    <h3>📝 Tambah Catatan</h3>
+    <div class="form-group">
+      <label>Judul</label>
+      <input type="text" id="noteTitle" placeholder="Judul catatan...">
+    </div>
+    <div class="form-group">
+      <label>Isi Catatan</label>
+      <textarea id="noteBody" placeholder="Tulis catatan pertanian Anda..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Kategori</label>
+      <select id="noteCat">
+        <option>Harian</option>
+        <option>Mingguan</option>
+        <option>Bulanan</option>
+      </select>
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-outline" onclick="closeModal('noteModal')">Batal</button>
+      <button class="btn btn-primary" onclick="addNote()">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ===== PAGE: HOME ===== -->
+<div class="page active" id="page-home">
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-label"><i class="fa-solid fa-seedling"></i> Platform Pertanian Digital Indonesia</div>
+        <h1>Membantu Petani Mendapat <span>Informasi</span> dan Ruang Diskusi Modern</h1>
+        <p>Bergabung dengan ribuan petani Indonesia. Berbagi pengalaman, temukan informasi terkini, dan jual produk pertanian Anda dengan mudah.</p>
+        <div class="hero-btns">
+          <button class="btn btn-primary" onclick="showPage('forum',null)"><i class="fa-solid fa-comments"></i> Mulai Diskusi</button>
+          <button class="btn btn-outline" onclick="showPage('produk',null)"><i class="fa-solid fa-store"></i> Lihat Produk</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-3d">
+          <div class="hero-3d-inner">🌾</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tips Ticker -->
+  <div class="tips-section">
+    <div class="tips-inner">
+      <span class="tips-label">💡 Tips Hari Ini</span>
+      <div class="tips-text" id="tipsTicker">Siram tanaman pagi hari sebelum jam 9 untuk mengurangi penguapan berlebih.</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card fade-up">
+      <div class="stat-num">12.4K</div>
+      <div class="stat-label">👨‍🌾 Petani Terdaftar</div>
+    </div>
+    <div class="stat-card fade-up">
+      <div class="stat-num">3.8K</div>
+      <div class="stat-label">💬 Diskusi Aktif</div>
+    </div>
+    <div class="stat-card fade-up">
+      <div class="stat-num">847</div>
+      <div class="stat-label">🛒 Produk Tersedia</div>
+    </div>
+    <div class="stat-card fade-up">
+      <div class="stat-num">34</div>
+      <div class="stat-label">🗺️ Provinsi Terjangkau</div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="section">
+    <div class="badge">Fitur Unggulan</div>
+    <h2 class="section-title" style="margin-top:0.5rem">Semua Kebutuhan Petani dalam Satu Platform</h2>
+    <p class="section-sub">Dirancang khusus untuk petani Indonesia dari berbagai usia dan latar belakang.</p>
+    <div class="feature-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:#e8f5e9"><span>💬</span></div>
+        <h3>Forum Diskusi</h3>
+        <p>Tanyakan masalah pertanian, dapatkan jawaban dari sesama petani dan pakar pertanian berpengalaman.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:#e8f5e9"><span>🛒</span></div>
+        <h3>Jual Beli Produk</h3>
+        <p>Jual hasil panen dan beli alat pertanian langsung dari sesama petani tanpa perantara.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:#e8f5e9"><span>📋</span></div>
+        <h3>Catatan Tani</h3>
+        <p>Catat aktivitas pertanian harian, mingguan, dan bulanan. Lengkap dengan kalender dan reminder.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:#e8f5e9"><span>📰</span></div>
+        <h3>Berita Terkini</h3>
+        <p>Update informasi harga pasar, cuaca, teknologi baru, dan kebijakan pertanian pemerintah.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:#e8f5e9"><span>💌</span></div>
+        <h3>Chat Pribadi</h3>
+        <p>Komunikasi langsung dengan sesama petani, pedagang, dan penyuluh pertanian dengan mudah.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:#e8f5e9"><span>🤖</span></div>
+        <h3>AI Pertanian</h3>
+        <p>Segera hadir! Asisten cerdas berbasis AI yang siap membantu menjawab semua pertanyaan pertanian Anda.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info Cards -->
+  <div class="section" style="padding-top:0">
+    <div class="badge">Informasi Pertanian</div>
+    <h2 class="section-title" style="margin-top:0.5rem">Update Cuaca & Info Sawah</h2>
+    <div class="grid-3" style="margin-top:1.5rem">
+      <div class="card" style="padding:1.25rem">
+        <div style="font-size:2rem;margin-bottom:0.75rem">🌤️</div>
+        <h4 style="font-weight:700;margin-bottom:0.5rem">Cuaca Hari Ini</h4>
+        <p style="font-size:0.85rem;color:var(--text-secondary)">Jawa Timur: Berawan sebagian, 28°C. Cocok untuk kegiatan luar ruangan. Kemungkinan hujan ringan sore hari.</p>
+        <div style="margin-top:0.75rem;font-size:0.78rem;color:var(--green-600);font-weight:600">⚠️ Waspadai angin kencang 12–16 km/jam</div>
+      </div>
+      <div class="card" style="padding:1.25rem">
+        <div style="font-size:2rem;margin-bottom:0.75rem">📊</div>
+        <h4 style="font-weight:700;margin-bottom:0.5rem">Harga Komoditas</h4>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem"><span>🌾 Padi</span><span style="font-weight:700;color:var(--green-600)">Rp 5.200/kg</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem"><span>🌽 Jagung</span><span style="font-weight:700;color:var(--green-600)">Rp 4.800/kg</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem"><span>🥬 Cabai</span><span style="font-weight:700;color:#ef4444">Rp 42.000/kg ▲</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:0.82rem"><span>🧅 Bawang</span><span style="font-weight:700;color:var(--green-600)">Rp 18.500/kg</span></div>
+        </div>
+      </div>
+      <div class="card" style="padding:1.25rem">
+        <div style="font-size:2rem;margin-bottom:0.75rem">🌱</div>
+        <h4 style="font-weight:700;margin-bottom:0.5rem">Tips Musim Ini</h4>
+        <ul style="font-size:0.82rem;color:var(--text-secondary);display:flex;flex-direction:column;gap:6px">
+          <li>✅ Perhatikan kadar air tanah sebelum tanam</li>
+          <li>✅ Gunakan pupuk organik untuk hasil optimal</li>
+          <li>✅ Periksa hama pada pagi dan sore hari</li>
+          <li>✅ Jadwalkan irigasi secara rutin</li>
+          <li>⚠️ Waspadai serangan wereng di musim ini</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section" style="padding-top:0">
+    <div class="badge">FAQ</div>
+    <h2 class="section-title" style="margin-top:0.5rem">Pertanyaan yang Sering Diajukan</h2>
+    <div style="margin-top:1.5rem">
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Bagaimana cara mendaftar di TaniDigital? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">Pendaftaran dilakukan langsung di platform ini. Klik tombol Profil di pojok kanan atas, isi data diri Anda sebagai petani, dan Anda langsung bisa menggunakan semua fitur secara gratis.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Apakah TaniDigital gratis? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">Ya! TaniDigital sepenuhnya gratis untuk petani Indonesia. Kami percaya bahwa akses informasi pertanian adalah hak semua petani tanpa terkecuali.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Bagaimana cara menjual produk di sini? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">Buka menu Produk, klik tombol "Jual Produk", isi informasi produk beserta foto dan harga. Produk Anda akan langsung tampil di marketplace dan bisa dilihat petani lain.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Apakah ada fitur untuk daerah terpencil? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">TaniDigital dirancang agar ringan dan bisa diakses dengan koneksi internet lambat sekalipun. Semua fitur dioptimalkan untuk pengguna di daerah dengan keterbatasan sinyal.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Bagaimana cara bergabung grup privat? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">Di menu Grup, klik tombol "Gabung Grup Privat", lalu masukkan kode undangan yang didapat dari admin atau anggota grup tersebut. Kode biasanya dibagikan melalui pesan langsung.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:0.5rem;font-size:1.3rem;font-weight:800">
+          <div style="width:36px;height:36px;background:var(--green-500);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.1rem">🌾</div>
+          TaniDigital
+        </div>
+        <p>Platform komunitas pertanian digital untuk petani Indonesia. Bersama kita wujudkan pertanian modern yang sejahtera.</p>
+        <div class="social-row">
+          <div class="social-btn"><i class="fa-brands fa-facebook-f"></i></div>
+          <div class="social-btn"><i class="fa-brands fa-instagram"></i></div>
+          <div class="social-btn"><i class="fa-brands fa-youtube"></i></div>
+          <div class="social-btn"><i class="fa-brands fa-whatsapp"></i></div>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a onclick="showPage('forum',null)">Forum Diskusi</a>
+        <a onclick="showPage('produk',null)">Marketplace</a>
+        <a onclick="showPage('catatan',null)">Catatan Tani</a>
+        <a onclick="showPage('berita',null)">Berita</a>
+        <a onclick="showPage('grup',null)">Komunitas Grup</a>
+      </div>
+      <div class="footer-col">
+        <h4>Informasi</h4>
+        <a>Tentang Kami</a>
+        <a>Kebijakan Privasi</a>
+        <a>Syarat Layanan</a>
+        <a>Kontak Kami</a>
+        <a>Bantuan</a>
+      </div>
+      <div class="footer-col">
+        <h4>Kontak</h4>
+        <a>📧 info@tanidigital.id</a>
+        <a>📞 0800-TANI-123</a>
+        <a>📍 Jawa Timur, Indonesia</a>
+        <a>⏰ Sen–Jum 08.00–17.00</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2024 TaniDigital · Platform Pertanian Digital Indonesia · Dibuat dengan ❤️ untuk Petani Nusantara</div>
+  </footer>
+</div>
+
+<!-- ===== PAGE: FORUM ===== -->
+<div class="page" id="page-forum">
+  <div class="section">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+      <div>
+        <div class="badge">Komunitas</div>
+        <h2 class="section-title" style="margin-top:0.4rem">Forum Diskusi Pertanian</h2>
+      </div>
+      <button class="btn btn-primary" onclick="openModal('addGroupModal')"><i class="fa-solid fa-plus"></i> Buat Diskusi</button>
+    </div>
+    <div class="forum-layout">
+      <div class="forum-sidebar">
+        <div class="card" style="padding:1rem;margin-bottom:1rem">
+          <h4 style="font-weight:700;font-size:0.9rem;margin-bottom:0.75rem">🔖 Kategori</h4>
+          <div class="group-card active">
+            <div class="grup-privacy public">🌐 Semua Topik</div>
+            <div class="group-name" style="margin-top:0.4rem">Semua Diskusi</div>
+            <div class="group-meta">1.234 postingan</div>
+          </div>
+          <div class="group-card">
+            <div class="grup-privacy public">🌾 Publik</div>
+            <div class="group-name" style="margin-top:0.4rem">Padi & Perberasan</div>
+            <div class="group-meta">456 anggota · 234 diskusi</div>
+          </div>
+          <div class="group-card">
+            <div class="grup-privacy public">🥬 Publik</div>
+            <div class="group-name" style="margin-top:0.4rem">Sayuran & Buah</div>
+            <div class="group-meta">321 anggota · 178 diskusi</div>
+          </div>
+          <div class="group-card" onclick="openModal('joinPrivateModal')">
+            <div class="grup-privacy private">🔒 Privat</div>
+            <div class="group-name" style="margin-top:0.4rem">Teknik Irigasi Modern</div>
+            <div class="group-meta">Butuh kode undangan</div>
+          </div>
+          <div class="group-card" onclick="openModal('joinPrivateModal')">
+            <div class="grup-privacy private">🔒 Privat</div>
+            <div class="group-name" style="margin-top:0.4rem">Drone Pertanian</div>
+            <div class="group-meta">Butuh kode undangan</div>
+          </div>
+        </div>
+        <div class="card" style="padding:1rem">
+          <h4 style="font-weight:700;font-size:0.9rem;margin-bottom:0.75rem">🔥 Trending</h4>
+          <div style="display:flex;flex-direction:column;gap:0.5rem">
+            <div style="font-size:0.82rem;color:var(--text-secondary)">1. Cara mengatasi hama wereng</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary)">2. Rekomendasi pupuk organik</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary)">3. Tips panen jagung hibrida</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary)">4. Teknologi irigasi tetes</div>
+          </div>
+        </div>
+      </div>
+      <div id="forumFeed">
+        <!-- Posts will be inserted here by JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: PRODUK ===== -->
+<div class="page" id="page-produk">
+  <div class="section">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+      <div>
+        <div class="badge">Marketplace</div>
+        <h2 class="section-title" style="margin-top:0.4rem">Produk & Alat Pertanian</h2>
+      </div>
+      <div style="display:flex;gap:0.75rem;align-items:center">
+        <div style="position:relative">
+          <i class="fa-solid fa-magnifying-glass" style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);color:var(--gray-400);font-size:0.85rem"></i>
+          <input type="text" placeholder="Cari produk..." style="padding:0.55rem 1rem 0.55rem 2.5rem;border:1.5px solid var(--border);border-radius:50px;background:var(--input-bg);font-size:0.85rem;color:var(--text-primary);outline:none;width:200px">
+        </div>
+        <button class="btn btn-primary" onclick="showToast('Fitur jual produk akan segera tersedia!')"><i class="fa-solid fa-plus"></i> Jual</button>
+      </div>
+    </div>
+    <div class="product-filters">
+      <button class="filter-btn active">Semua</button>
+      <button class="filter-btn" onclick="filterActive(this)">Alat Tani</button>
+      <button class="filter-btn" onclick="filterActive(this)">Bibit & Benih</button>
+      <button class="filter-btn" onclick="filterActive(this)">Pupuk & Pestisida</button>
+      <button class="filter-btn" onclick="filterActive(this)">Teknologi</button>
+      <button class="filter-btn" onclick="filterActive(this)">Hasil Panen</button>
+    </div>
+    <!-- Recommended Products -->
+    <div class="badge" style="margin-bottom:1rem">⭐ Rekomendasi Alat Tani</div>
+    <div class="products-grid" id="productsGrid">
+      <!-- Products rendered by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: CATATAN ===== -->
+<div class="page" id="page-catatan">
+  <div class="section">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+      <div>
+        <div class="badge">Produktivitas</div>
+        <h2 class="section-title" style="margin-top:0.4rem">Catatan Petani</h2>
+      </div>
+      <button class="btn btn-primary" onclick="openModal('noteModal')"><i class="fa-solid fa-plus"></i> Catatan Baru</button>
+    </div>
+    <div class="notes-layout">
+      <div id="notesList">
+        <!-- Notes rendered by JS -->
+      </div>
+      <div>
+        <div class="calendar-widget" style="margin-bottom:1rem">
+          <div class="cal-header">
+            <button class="cal-nav" onclick="calNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+            <span id="calTitle" style="font-weight:700;font-size:0.9rem"></span>
+            <button class="cal-nav" onclick="calNav(1)"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+        <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+          <h4 style="font-weight:700;font-size:0.9rem;margin-bottom:1rem">⏰ Pengingat Aktivitas</h4>
+          <div class="reminder-item">
+            <span class="reminder-icon">💧</span>
+            <div><div class="reminder-text" style="font-weight:600">Penyiraman Sawah</div><div class="reminder-time">Setiap hari · 06.00 WIB</div></div>
+          </div>
+          <div class="reminder-item">
+            <span class="reminder-icon">🌿</span>
+            <div><div class="reminder-text" style="font-weight:600">Pemupukan Tanaman</div><div class="reminder-time">Rabu & Sabtu · 07.30 WIB</div></div>
+          </div>
+          <div class="reminder-item">
+            <span class="reminder-icon">🔍</span>
+            <div><div class="reminder-text" style="font-weight:600">Pengecekan Hama</div><div class="reminder-time">Setiap hari · 16.00 WIB</div></div>
+          </div>
+          <button class="btn btn-outline" style="width:100%;margin-top:0.75rem;justify-content:center" onclick="showToast('Reminder berhasil ditambahkan!')">+ Tambah Pengingat</button>
+        </div>
+        <div class="card" style="padding:1.25rem">
+          <h4 style="font-weight:700;font-size:0.9rem;margin-bottom:1rem">📊 Statistik Tani</h4>
+          <div style="display:flex;flex-direction:column;gap:0.75rem">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:4px">
+                <span>Target Panen</span><span style="font-weight:700;color:var(--green-600)">68%</span>
+              </div>
+              <div style="height:8px;background:var(--gray-200);border-radius:50px;overflow:hidden">
+                <div style="width:68%;height:100%;background:var(--green-500);border-radius:50px"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:4px">
+                <span>Penggunaan Air</span><span style="font-weight:700;color:var(--green-600)">45%</span>
+              </div>
+              <div style="height:8px;background:var(--gray-200);border-radius:50px;overflow:hidden">
+                <div style="width:45%;height:100%;background:#3b82f6;border-radius:50px"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:4px">
+                <span>Kondisi Tanaman</span><span style="font-weight:700;color:var(--green-600)">82%</span>
+              </div>
+              <div style="height:8px;background:var(--gray-200);border-radius:50px;overflow:hidden">
+                <div style="width:82%;height:100%;background:var(--green-400);border-radius:50px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: BERITA ===== -->
+<div class="page" id="page-berita">
+  <div class="section">
+    <div class="badge">Informasi Terkini</div>
+    <h2 class="section-title" style="margin-top:0.4rem;margin-bottom:0.5rem">Berita Pertanian</h2>
+    <p class="section-sub">Update terbaru seputar dunia pertanian Indonesia</p>
+    <div class="news-layout">
+      <div>
+        <!-- Featured News -->
+        <div class="news-featured" style="margin-bottom:1.5rem">
+          <div class="card">
+            <div class="news-img">🌾</div>
+            <div class="news-content">
+              <span class="breaking-badge">🔴 BREAKING</span>
+              <div class="news-title">Pemerintah Naikkan Harga Pembelian Padi — Petani Sambut Gembira</div>
+              <div class="news-excerpt">Kementerian Pertanian resmi mengumumkan kenaikan Harga Pembelian Pemerintah (HPP) untuk gabah kering panen menjadi Rp 6.000 per kilogram. Kebijakan ini disambut antusias jutaan petani padi di seluruh Indonesia...</div>
+              <div class="news-meta">📅 7 Desember 2024 · ✍️ Redaksi TaniDigital</div>
+            </div>
+          </div>
+        </div>
+        <!-- News List -->
+        <div class="card" style="overflow:hidden">
+          <div style="padding:1rem;border-bottom:1px solid var(--border);font-weight:700">📋 Berita Terbaru</div>
+          <div class="news-list-item" onclick="showToast('Membuka berita...')">
+            <div class="news-thumb">⚠️</div>
+            <div>
+              <div class="news-item-title">Harga Pupuk Subsidi Naik — Dampak bagi Petani Kecil</div>
+              <div class="news-item-meta">📅 6 Des 2024 · Kebijakan</div>
+            </div>
+          </div>
+          <div class="news-list-item" onclick="showToast('Membuka berita...')">
+            <div class="news-thumb">🌧️</div>
+            <div>
+              <div class="news-item-title">BMKG Peringatkan Cuaca Ekstrem di Sejumlah Daerah Pertanian</div>
+              <div class="news-item-meta">📅 5 Des 2024 · Cuaca</div>
+            </div>
+          </div>
+          <div class="news-list-item" onclick="showToast('Membuka berita...')">
+            <div class="news-thumb">🚁</div>
+            <div>
+              <div class="news-item-title">Drone Pertanian Murah Merambah ke Pedesaan Jawa dan Sumatra</div>
+              <div class="news-item-meta">📅 4 Des 2024 · Teknologi</div>
+            </div>
+          </div>
+          <div class="news-list-item" onclick="showToast('Membuka berita...')">
+            <div class="news-thumb">🌾</div>
+            <div>
+              <div class="news-item-title">Tips Panen Optimal di Akhir Musim Hujan 2024</div>
+              <div class="news-item-meta">📅 3 Des 2024 · Tips & Panduan</div>
+            </div>
+          </div>
+          <div class="news-list-item" onclick="showToast('Membuka berita...')">
+            <div class="news-thumb">🏛️</div>
+            <div>
+              <div class="news-item-title">Program Bantuan Alat Tani Rp 2 Triliun Siap Disalurkan</div>
+              <div class="news-item-meta">📅 2 Des 2024 · Bantuan Pemerintah</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Sidebar -->
+      <div>
+        <div class="card" style="padding:1.25rem;margin-bottom:1rem">
+          <h4 style="font-weight:700;font-size:0.9rem;margin-bottom:1rem">🏷️ Kategori Berita</h4>
+          <div style="display:flex;flex-direction:column;gap:0.5rem">
+            <div style="display:flex;justify-content:space-between;font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border)">
+              <span>📋 Kebijakan Pemerintah</span><span class="badge">12</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border)">
+              <span>💰 Harga Komoditas</span><span class="badge">8</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border)">
+              <span>🌧️ Cuaca & Iklim</span><span class="badge">15</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border)">
+              <span>💡 Teknologi Baru</span><span class="badge">7</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.85rem;padding:6px 0">
+              <span>🌱 Tips Bertani</span><span class="badge">22</span>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding:1.25rem">
+          <h4 style="font-weight:700;font-size:0.9rem;margin-bottom:1rem">🌡️ Kondisi Cuaca</h4>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center">
+            <div style="padding:8px;background:var(--input-bg);border-radius:8px">
+              <div style="font-size:1.3rem">⛅</div>
+              <div style="font-size:0.7rem;color:var(--text-muted)">Sen</div>
+              <div style="font-size:0.8rem;font-weight:700">29°</div>
+            </div>
+            <div style="padding:8px;background:var(--green-100);border-radius:8px">
+              <div style="font-size:1.3rem">🌤️</div>
+              <div style="font-size:0.7rem;color:var(--text-muted)">Sel</div>
+              <div style="font-size:0.8rem;font-weight:700;color:var(--green-700)">31°</div>
+            </div>
+            <div style="padding:8px;background:var(--input-bg);border-radius:8px">
+              <div style="font-size:1.3rem">🌧️</div>
+              <div style="font-size:0.7rem;color:var(--text-muted)">Rab</div>
+              <div style="font-size:0.8rem;font-weight:700">26°</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: AI ===== -->
+<div class="page" id="page-ai">
+  <div class="ai-page">
+    <div class="ai-coming">
+      <div class="ai-icon">🤖</div>
+      <div class="ai-title">AI Pertanian Belum Tersedia</div>
+      <div class="ai-text">Fitur AI TaniDigital sedang dalam pengembangan. Segera hadir untuk membantu petani dengan teknologi kecerdasan buatan — mulai dari diagnosis tanaman, rekomendasi pupuk, hingga prediksi cuaca pertanian.</div>
+      <div class="ai-badge">⚡ Segera Hadir — Nantikan!</div>
+      <div style="margin-top:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;text-align:left">
+        <div style="padding:0.75rem;background:var(--input-bg);border-radius:var(--radius-sm)">
+          <div style="font-size:1.3rem;margin-bottom:0.3rem">🌿</div>
+          <div style="font-size:0.8rem;font-weight:600">Diagnosis Tanaman</div>
+          <div style="font-size:0.72rem;color:var(--text-muted)">Foto → analisis penyakit</div>
+        </div>
+        <div style="padding:0.75rem;background:var(--input-bg);border-radius:var(--radius-sm)">
+          <div style="font-size:1.3rem;margin-bottom:0.3rem">🧪</div>
+          <div style="font-size:0.8rem;font-weight:600">Rekomendasi Pupuk</div>
+          <div style="font-size:0.72rem;color:var(--text-muted)">Sesuai jenis tanah</div>
+        </div>
+        <div style="padding:0.75rem;background:var(--input-bg);border-radius:var(--radius-sm)">
+          <div style="font-size:1.3rem;margin-bottom:0.3rem">📈</div>
+          <div style="font-size:0.8rem;font-weight:600">Prediksi Harga</div>
+          <div style="font-size:0.72rem;color:var(--text-muted)">Komoditas 30 hari ke depan</div>
+        </div>
+        <div style="padding:0.75rem;background:var(--input-bg);border-radius:var(--radius-sm)">
+          <div style="font-size:1.3rem;margin-bottom:0.3rem">🌦️</div>
+          <div style="font-size:0.8rem;font-weight:600">Prediksi Cuaca Sawah</div>
+          <div style="font-size:0.72rem;color:var(--text-muted)">Lokasi spesifik lahan</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: GRUP ===== -->
+<div class="page" id="page-grup">
+  <div class="section">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+      <div>
+        <div class="badge">Komunitas</div>
+        <h2 class="section-title" style="margin-top:0.4rem">Grup Komunitas</h2>
+      </div>
+      <div style="display:flex;gap:0.5rem">
+        <button class="btn btn-outline" onclick="openModal('joinPrivateModal')"><i class="fa-solid fa-key"></i> Gabung Privat</button>
+        <button class="btn btn-primary" onclick="openModal('addGroupModal')"><i class="fa-solid fa-plus"></i> Buat Grup</button>
+      </div>
+    </div>
+    <div class="product-filters">
+      <button class="filter-btn active">Semua Grup</button>
+      <button class="filter-btn" onclick="filterActive(this)">🌐 Publik</button>
+      <button class="filter-btn" onclick="filterActive(this)">🔒 Privat</button>
+      <button class="filter-btn" onclick="filterActive(this)">Grup Saya</button>
+    </div>
+    <div class="grup-grid" id="grupGrid">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: CHAT ===== -->
+<div class="page" id="page-chat">
+  <div class="chat-layout">
+    <div class="chat-sidebar">
+      <div class="chat-sidebar-header">
+        <h3>💬 Pesan</h3>
+        <div class="chat-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Cari chat...">
+        </div>
+      </div>
+      <div class="chat-list" id="chatList">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+    <div class="chat-main">
+      <div class="chat-header">
+        <div class="chat-avatar">
+          <div class="avatar">PD</div>
+          <div class="online-dot"></div>
+        </div>
+        <div>
+          <div style="font-weight:700;font-size:0.9rem">Pak Darmanto</div>
+          <div class="chat-status">● Online</div>
+        </div>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="chat-input-area">
+        <button class="chat-attach-btn"><i class="fa-solid fa-paperclip"></i></button>
+        <button class="chat-attach-btn"><i class="fa-regular fa-image"></i></button>
+        <input type="text" id="chatInput" placeholder="Ketik pesan..." onkeydown="if(event.key==='Enter')sendMsg()">
+        <button class="chat-send-btn" onclick="sendMsg()"><i class="fa-solid fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: SETTINGS ===== -->
+<div class="page" id="page-settings">
+  <div class="section">
+    <div class="badge">Pengaturan</div>
+    <h2 class="section-title" style="margin-top:0.4rem;margin-bottom:1.5rem">Pengaturan Akun</h2>
+    <div class="settings-layout">
+      <div>
+        <div class="card" style="padding:1rem">
+          <div class="settings-nav">
+            <div class="settings-nav-item active" onclick="showSettingsPanel('profil',this)"><i class="fa-solid fa-user"></i> Profil Saya</div>
+            <div class="settings-nav-item" onclick="showSettingsPanel('akun',this)"><i class="fa-solid fa-gear"></i> Pengaturan Umum</div>
+            <div class="settings-nav-item" onclick="showSettingsPanel('notif',this)"><i class="fa-solid fa-bell"></i> Notifikasi</div>
+            <div class="settings-nav-item" onclick="showSettingsPanel('tampilan',this)"><i class="fa-solid fa-palette"></i> Tampilan & Tema</div>
+            <div class="settings-nav-item" onclick="showSettingsPanel('bahasa',this)"><i class="fa-solid fa-language"></i> Bahasa</div>
+            <div class="settings-nav-item" style="color:#ef4444" onclick="showToast('Berhasil logout!')"><i class="fa-solid fa-right-from-bracket"></i> Keluar</div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="padding:1.5rem">
+        <!-- Profile Panel -->
+        <div class="settings-panel active" id="panel-profil">
+          <div class="settings-title">👤 Profil Saya</div>
+          <div class="profile-avatar-big">PK</div>
+          <div class="grid-2" style="gap:1rem">
+            <div class="form-group"><label>Nama Lengkap</label><input type="text" value="Pak Kartono"></div>
+            <div class="form-group"><label>Nomor HP</label><input type="text" value="0812-XXXX-XXXX"></div>
+            <div class="form-group"><label>Desa / Kelurahan</label><input type="text" value="Desa Sukamaju"></div>
+            <div class="form-group"><label>Kabupaten</label><input type="text" value="Malang"></div>
+          </div>
+          <div class="form-group"><label>Jenis Tanaman Utama</label><input type="text" value="Padi, Jagung, Kedelai"></div>
+          <button class="btn btn-primary" onclick="showToast('Profil berhasil disimpan!')"><i class="fa-solid fa-floppy-disk"></i> Simpan Profil</button>
+        </div>
+        <!-- General Settings Panel -->
+        <div class="settings-panel" id="panel-akun">
+          <div class="settings-title">⚙️ Pengaturan Umum</div>
+          <div class="toggle-row">
+            <div><div class="toggle-label" style="font-weight:600">Mode Data Hemat</div><div class="toggle-desc">Kurangi penggunaan data internet</div></div>
+            <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label" style="font-weight:600">Teks Lebih Besar</div><div class="toggle-desc">Untuk kemudahan membaca</div></div>
+            <label class="toggle-switch"><input type="checkbox"><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label" style="font-weight:600">Tampilkan Status Online</div><div class="toggle-desc">Orang lain bisa melihat Anda online</div></div>
+            <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+          </div>
+        </div>
+        <!-- Notifications Panel -->
+        <div class="settings-panel" id="panel-notif">
+          <div class="settings-title">🔔 Notifikasi</div>
+          <div class="toggle-row">
+            <div><div class="toggle-label" style="font-weight:600">Notifikasi Aktif</div><div class="toggle-desc">Aktifkan semua notifikasi</div></div>
+            <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label" style="font-weight:600">Pesan Baru</div><div class="toggle-desc">Notifikasi saat ada pesan masuk</div></div>
+            <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label" style="font-weight:600">Berita Pertanian</div><div class="toggle-desc">Update berita terkini</div></div>
+            <label class="toggle-switch"><input type="checkbox"><span class="slider"></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><div class="toggle-label" style="font-weight:600">Reminder Tani</div><div class="toggle-desc">Pengingat aktivitas pertanian</div></div>
+            <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+          </div>
+        </div>
+        <!-- Theme Panel -->
+        <div class="settings-panel" id="panel-tampilan">
+          <div class="settings-title">🎨 Tampilan & Tema</div>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:1.25rem">Pilih tampilan yang nyaman untuk Anda.</p>
+          <div class="theme-options">
+            <div class="theme-option active" id="lightThemeBtn" onclick="setTheme('light')">☀️ Mode Terang</div>
+            <div class="theme-option" id="darkThemeBtn" onclick="setTheme('dark')">🌙 Mode Gelap Hijau</div>
+          </div>
+        </div>
+        <!-- Language Panel -->
+        <div class="settings-panel" id="panel-bahasa">
+          <div class="settings-title">🌐 Pilih Bahasa</div>
+          <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:1.25rem">Pilih bahasa yang paling mudah dipahami.</p>
+          <div class="lang-options">
+            <div class="lang-option active" onclick="setLang(this,'id')">🇮🇩 Bahasa Indonesia</div>
+            <div class="lang-option" onclick="setLang(this,'jv')">🌿 Basa Jawa</div>
+            <div class="lang-option" onclick="setLang(this,'en')">🇬🇧 English</div>
+          </div>
+          <div id="langMsg" style="margin-top:1rem;padding:0.75rem;background:var(--green-100);border-radius:8px;font-size:0.85rem;color:var(--green-700);display:none">
+            ✅ Bahasa berhasil diubah!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// ===== DATA =====
+const products = [
+  { id:1, name:'Cangkul Premium Baja', emoji:'⛏️', price:'Rp 145.000', cat:'Alat Tani', eff:4, price_score:9, quality:8, rec:94, rating:4.5, reviews:128 },
+  { id:2, name:'Traktor Mini Pertanian', emoji:'🚜', price:'Rp 12.500.000', cat:'Alat Tani', eff:5, price_score:7, quality:9, rec:98, rating:4.8, reviews:56 },
+  { id:3, name:'Mesin Penyiram Otomatis', emoji:'💧', price:'Rp 2.800.000', cat:'Teknologi', eff:5, price_score:8, quality:8, rec:96, rating:4.7, reviews:89 },
+  { id:4, name:'Pompa Air Sawah', emoji:'🔧', price:'Rp 1.200.000', cat:'Alat Tani', eff:4, price_score:9, quality:8, rec:92, rating:4.4, reviews:203 },
+  { id:5, name:'Alat Semprot Elektrik', emoji:'🪣', price:'Rp 680.000', cat:'Alat Tani', eff:4, price_score:9, quality:7, rec:88, rating:4.3, reviews:167 },
+  { id:6, name:'Bibit Padi Unggul IR64', emoji:'🌾', price:'Rp 28.000/kg', cat:'Bibit & Benih', eff:5, price_score:9, quality:9, rec:97, rating:4.9, reviews:342 },
+  { id:7, name:'Pupuk Organik Cair', emoji:'🧴', price:'Rp 35.000/L', cat:'Pupuk & Pestisida', eff:4, price_score:10, quality:8, rec:93, rating:4.5, reviews:211 },
+  { id:8, name:'Mesin Penggiling Padi', emoji:'⚙️', price:'Rp 8.500.000', cat:'Alat Tani', eff:5, price_score:7, quality:9, rec:95, rating:4.7, reviews:44 },
+  { id:9, name:'Alat Ukur pH Tanah', emoji:'🔬', price:'Rp 185.000', cat:'Teknologi', eff:4, price_score:9, quality:8, rec:91, rating:4.4, reviews:96 },
+  { id:10, name:'Drone Pertanian DJI', emoji:'🚁', price:'Rp 45.000.000', cat:'Teknologi', eff:5, price_score:5, quality:10, rec:99, rating:5.0, reviews:23 },
+];
+
+const forumPosts = [
+  { user:'Pak Slamet', initial:'PS', time:'2 jam lalu', title:'Padi saya terkena wereng coklat', content:'Sawah saya seluas 1 hektar mulai terserang wereng coklat. Sudah saya semprot 2x tapi belum sembuh. Ada yang punya pengalaman mengatasi ini? Tolong bantu yaa...', likes:24, comments:8 },
+  { user:'Bu Rahayu', initial:'BR', time:'5 jam lalu', title:'Rekomendasi pupuk untuk tanah asam?', content:'Tanah di kebun saya pH-nya sekitar 5.2, termasuk cukup asam. Kira-kira pupuk apa yang cocok untuk menanam cabai di tanah seperti ini? Sudah coba dolomit tapi hasilnya kurang maksimal.', likes:18, comments:12 },
+  { user:'Mas Wahyu', initial:'MW', time:'1 hari lalu', title:'Tips panen jagung di musim hujan', content:'Bagi yang mau panen jagung bulan ini, perlu hati-hati karena curah hujan tinggi. Saya sudah panen kemarin dan hasilnya lumayan karena antisipasi lebih awal. Ini tips dari saya...', likes:45, comments:21 },
+];
+
+const chatContacts = [
+  { name:'Pak Darmanto', initial:'PD', preview:'Siap, besok pagi saya ke sawah', time:'09.15', online:true },
+  { name:'Bu Sulastri', initial:'BS', preview:'Pupuk organiknya ada stok?', time:'Kemarin', online:false },
+  { name:'Kios Tani Maju', initial:'KT', preview:'Harga bibit padi 28rb/kg', time:'Sen', online:true },
+  { name:'Penyuluh Desa', initial:'PD', preview:'Jadwal penyuluhan bulan ini...', time:'Min', online:false },
+];
+
+const chatMsgs = [
+  { text:'Halo Pak! Bagaimana kondisi sawah hari ini?', sent:false, time:'08.42' },
+  { text:'Alhamdulillah, padi sudah mulai berbuah. Tinggal menunggu 2 minggu lagi.', sent:true, time:'08.45' },
+  { text:'Bagus sekali Pak! Apakah sudah semprot pestisida?', sent:false, time:'08.47' },
+  { text:'Sudah 3 hari lalu. Hasilnya mulai kelihatan, hama sudah berkurang.', sent:true, time:'08.50' },
+  { text:'Siap, besok pagi saya ke sawah untuk cek kondisi terakhir.', sent:false, time:'09.15' },
+];
+
+const grupData = [
+  { name:'Petani Padi Jatim', emoji:'🌾', members:'1.243 anggota', type:'public', cover:'#e8f5e9', category:'Padi & Beras' },
+  { name:'Komunitas Cabai Pedas', emoji:'🌶️', members:'567 anggota', type:'public', cover:'#fce4ec', category:'Sayuran' },
+  { name:'Teknik Irigasi Modern', emoji:'💧', members:'234 anggota', type:'private', cover:'#e3f2fd', category:'Teknologi' },
+  { name:'Drone Petani Indonesia', emoji:'🚁', members:'89 anggota', type:'private', cover:'#f3e5f5', category:'Teknologi' },
+  { name:'Petani Organik', emoji:'🌿', members:'892 anggota', type:'public', cover:'#e8f5e9', category:'Umum' },
+  { name:'Pengusaha Benih Unggul', emoji:'🌱', members:'345 anggota', type:'private', cover:'#fff9c4', category:'Bibit' },
+];
+
+const tipsArr = [
+  'Siram tanaman pagi hari sebelum jam 9 untuk mengurangi penguapan berlebih.',
+  'Rotasi tanaman setiap musim dapat mengurangi risiko hama dan penyakit tanah.',
+  'Gunakan pupuk kandang fermentasi untuk memperbaiki struktur tanah secara alami.',
+  'Cek kadar pH tanah sebelum menanam agar nutrisi dapat terserap optimal.',
+  'Tanam tanaman pagar di sekeliling sawah untuk menghalangi serangan hama.',
+];
+
+// ===== STATE =====
+let notes = [
+  { id:1, title:'Tanam Padi Musim Ini', body:'Mulai tanam tanggal 1 Desember. Varietas IR64. Luas 0.5 ha.', date:'1 Des 2024', cat:'Bulanan' },
+  { id:2, title:'Pemupukan Minggu Ini', body:'Pupuk urea 50kg untuk sawah bagian timur. Beli di kios Pak Hadi.', date:'5 Des 2024', cat:'Mingguan' },
+  { id:3, title:'Laporan Harian', body:'Sawah kering, perlu pengairan segera. Hama wereng mulai terlihat.', date:'7 Des 2024', cat:'Harian' },
+];
+let calcStr = '';
+let calDate = new Date();
+let tipsIdx = 0;
+let cartCount = 0;
+
+// ===== PAGE NAVIGATION =====
+function showPage(id, linkEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.nav-menu a').forEach(a => a.classList.remove('active'));
+  if (linkEl) linkEl.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function toggleDrawer() {
+  document.getElementById('mobile-drawer').classList.toggle('open');
+}
+
+// ===== NAVBAR SCROLL =====
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+  animateFadeUps();
+});
+
+// ===== FLOAT POPUPS =====
+function togglePopup(id) {
+  document.querySelectorAll('.float-popup').forEach(p => { if (p.id !== id) p.classList.remove('active'); });
+  document.getElementById(id).classList.toggle('active');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.float-popup') && !e.target.closest('#float-widget')) {
+    document.querySelectorAll('.float-popup').forEach(p => p.classList.remove('active'));
+  }
+});
+
+// ===== CALCULATOR =====
+function calcAction(v) {
+  const d = document.getElementById('calcDisplay');
+  if (v === 'C') { calcStr = ''; d.textContent = '0'; return; }
+  if (v === '=') {
+    try {
+      calcStr = String(eval(calcStr.replace('×','*').replace('÷','/')));
+      d.textContent = calcStr;
+    } catch { d.textContent = 'Error'; calcStr = ''; }
+    return;
+  }
+  if (v === '±') { calcStr = calcStr.startsWith('-') ? calcStr.slice(1) : '-' + calcStr; }
+  else if (v === '%') { try { calcStr = String(parseFloat(calcStr) / 100); } catch{} }
+  else { calcStr += v; }
+  d.textContent = calcStr || '0';
+}
+
+// ===== LIVE CLOCK =====
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const days = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+  const el = document.getElementById('live-time');
+  if (el) el.innerHTML = `${h}:${m}<br><span style="font-size:0.55rem">${days[now.getDay()]} ${now.getDate()}/${now.getMonth()+1}</span>`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ===== TIPS TICKER =====
+function cycleTips() {
+  tipsIdx = (tipsIdx + 1) % tipsArr.length;
+  document.getElementById('tipsTicker').textContent = tipsArr[tipsIdx];
+}
+setInterval(cycleTips, 8000);
+
+// ===== MODAL =====
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+document.getElementById('newGroupType').addEventListener('change', function() {
+  document.getElementById('codeGroupWrap').style.display = this.value === 'private' ? 'block' : 'none';
+});
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ===== FORUM =====
+function renderForum() {
+  const feed = document.getElementById('forumFeed');
+  feed.innerHTML = forumPosts.map((p,i) => `
+    <div class="card post-card fade-up">
+      <div class="post-header">
+        <div class="avatar">${p.initial}</div>
+        <div>
+          <div style="font-weight:700;font-size:0.9rem">${p.user}</div>
+          <div class="post-meta">${p.time}</div>
+        </div>
+      </div>
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:0.5rem">${p.title}</div>
+      <div class="post-content">${p.content}</div>
+      <div class="post-actions">
+        <button class="post-action-btn" onclick="likePost(${i},this)"><i class="fa-regular fa-heart"></i> <span>${p.likes}</span></button>
+        <button class="post-action-btn"><i class="fa-regular fa-comment"></i> ${p.comments} komentar</button>
+        <button class="post-action-btn" onclick="showToast('Link diskusi disalin!')"><i class="fa-solid fa-share-nodes"></i> Bagikan</button>
+      </div>
+      <div class="comment-input">
+        <div class="avatar" style="width:30px;height:30px;font-size:0.75rem">PK</div>
+        <input type="text" placeholder="Tulis komentar...">
+        <button class="btn btn-primary" style="padding:0.4rem 0.9rem;font-size:0.78rem;border-radius:50px">Kirim</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function likePost(i, btn) {
+  forumPosts[i].likes++;
+  btn.querySelector('span').textContent = forumPosts[i].likes;
+  btn.querySelector('i').className = 'fa-solid fa-heart';
+  btn.style.color = '#ef4444';
+}
+
+// ===== PRODUCTS =====
+function renderProducts() {
+  const g = document.getElementById('productsGrid');
+  g.innerHTML = products.map(p => `
+    <div class="card product-card fade-up">
+      <div class="product-img">
+        ${p.emoji}
+        <button class="product-wishlist"><i class="fa-regular fa-heart"></i></button>
+      </div>
+      <div class="product-info">
+        <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:3px">${p.cat}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-price">${p.price}</div>
+        <div class="product-rating">
+          <span class="stars">${'★'.repeat(Math.floor(p.rating))}${'☆'.repeat(5-Math.floor(p.rating))}</span>
+          ${p.rating} (${p.reviews} ulasan)
+        </div>
+        <div class="product-metrics">
+          <div class="metric-row">
+            <span class="metric-label">Efisiensi</span>
+            <div class="metric-bar"><div class="metric-fill" style="width:${p.eff*20}%"></div></div>
+            <span class="metric-val">${p.eff}/5</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Harga</span>
+            <div class="metric-bar"><div class="metric-fill" style="width:${p.price_score*10}%"></div></div>
+            <span class="metric-val">${p.price_score}/10</span>
+          </div>
+          <div class="metric-row">
+            <span class="metric-label">Kualitas</span>
+            <div class="metric-bar"><div class="metric-fill" style="width:${p.quality*10}%"></div></div>
+            <span class="metric-val">${p.quality}/10</span>
+          </div>
+        </div>
+        <div style="font-size:0.75rem;color:var(--green-600);font-weight:600;margin:4px 0">
+          ✅ ${p.rec}% petani merekomendasikan
+        </div>
+        <div class="product-actions">
+          <button class="btn-cart" onclick="addToCart('${p.name}')">🛒 Tambah ke Keranjang</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addToCart(name) {
+  cartCount++;
+  showToast(`${name} ditambahkan ke keranjang! (${cartCount} item)`);
+}
+
+// ===== FILTER BUTTONS =====
+function filterActive(btn) {
+  btn.parentElement.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ===== CALENDAR =====
+function renderCalendar() {
+  const months = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const y = calDate.getFullYear(), m = calDate.getMonth();
+  document.getElementById('calTitle').textContent = months[m] + ' ' + y;
+  const first = new Date(y, m, 1).getDay();
+  const days = new Date(y, m+1, 0).getDate();
+  const today = new Date();
+  const dayNames = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+  let html = dayNames.map(d => `<div class="cal-day-name">${d}</div>`).join('');
+  for (let i=0; i<first; i++) html += `<div></div>`;
+  for (let d=1; d<=days; d++) {
+    const isToday = d===today.getDate() && m===today.getMonth() && y===today.getFullYear();
+    html += `<div class="cal-day${isToday?' today':''}" onclick="showToast('${d} ${months[m]}')">${d}</div>`;
+  }
+  document.getElementById('calGrid').innerHTML = html;
+}
+function calNav(dir) { calDate.setMonth(calDate.getMonth()+dir); renderCalendar(); }
+
+// ===== NOTES =====
+function renderNotes() {
+  const el = document.getElementById('notesList');
+  if (!el) return;
+  const catColors = {Harian:'#e8f5e9',Mingguan:'#e3f2fd',Bulanan:'#fce4ec'};
+  el.innerHTML = `
+    <h4 style="font-weight:700;font-size:0.95rem;margin-bottom:1rem">📝 Catatan Saya (${notes.length})</h4>
+    ${notes.map(n => `
+      <div class="note-item" style="border-left-color:var(--green-${n.cat==='Bulanan'?700:n.cat==='Mingguan'?500:300})">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div class="note-title">${n.title}</div>
+          <span class="badge" style="font-size:0.7rem;background:${catColors[n.cat]};flex-shrink:0">${n.cat}</span>
+        </div>
+        <div class="note-body">${n.body}</div>
+        <div class="note-date">📅 ${n.date}</div>
+      </div>
+    `).join('')}
+  `;
+}
+
+function addNote() {
+  const t = document.getElementById('noteTitle').value.trim();
+  const b = document.getElementById('noteBody').value.trim();
+  const c = document.getElementById('noteCat').value;
+  if (!t) { showToast('Isi judul catatan dahulu!'); return; }
+  const now = new Date();
+  notes.unshift({ id: Date.now(), title:t, body:b||'Tidak ada isi.', date:`${now.getDate()} Des 2024`, cat:c });
+  closeModal('noteModal');
+  document.getElementById('noteTitle').value = '';
+  document.getElementById('noteBody').value = '';
+  renderNotes();
+  showToast('Catatan berhasil disimpan!');
+}
+
+// ===== CHAT =====
+function renderChat() {
+  const list = document.getElementById('chatList');
+  if (!list) return;
+  list.innerHTML = chatContacts.map((c,i) => `
+    <div class="chat-item ${i===0?'active':''}" onclick="selectChat(${i},this)">
+      <div class="chat-avatar">
+        <div class="avatar" style="width:40px;height:40px">${c.initial}</div>
+        ${c.online ? '<div class="online-dot"></div>' : ''}
+      </div>
+      <div style="flex:1;min-width:0">
+        <div class="chat-name">${c.name}</div>
+        <div class="chat-preview">${c.preview}</div>
+      </div>
+      <div class="chat-time">${c.time}</div>
+    </div>
+  `).join('');
+  renderMessages();
+}
+
+function selectChat(i, el) {
+  document.querySelectorAll('.chat-item').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  showToast(`Chat dengan ${chatContacts[i].name}`);
+}
+
+function renderMessages() {
+  const msgs = document.getElementById('chatMessages');
+  if (!msgs) return;
+  msgs.innerHTML = chatMsgs.map(m => `
+    <div class="msg-bubble ${m.sent?'sent':'recv'}">
+      <div class="bubble-content">${m.text}</div>
+      <div class="msg-time">${m.time}</div>
+    </div>
+  `).join('');
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function sendMsg() {
+  const inp = document.getElementById('chatInput');
+  const txt = inp.value.trim();
+  if (!txt) return;
+  chatMsgs.push({ text:txt, sent:true, time:new Date().toLocaleTimeString('id',{hour:'2-digit',minute:'2-digit'}) });
+  inp.value = '';
+  renderMessages();
+  setTimeout(() => {
+    const replies = ['Baik, terima kasih infonya Pak/Bu!','Siap, akan saya coba segera.','Iya, benar sekali. Makasih banyak!','Nanti saya cek dulu ya.'];
+    chatMsgs.push({ text:replies[Math.floor(Math.random()*replies.length)], sent:false, time:new Date().toLocaleTimeString('id',{hour:'2-digit',minute:'2-digit'}) });
+    renderMessages();
+  }, 1200);
+}
+
+// ===== GRUP =====
+function renderGrup() {
+  const g = document.getElementById('grupGrid');
+  if (!g) return;
+  const gradients = ['linear-gradient(135deg,#e8f5e9,#c8e6c9)','linear-gradient(135deg,#fce4ec,#f8bbd9)','linear-gradient(135deg,#e3f2fd,#bbdefb)','linear-gradient(135deg,#f3e5f5,#e1bee7)','linear-gradient(135deg,#e8f5e9,#dcedc8)','linear-gradient(135deg,#fff9c4,#fff59d)'];
+  g.innerHTML = grupData.map((gr,i) => `
+    <div class="card grup-card fade-up" onclick="${gr.type==='private' ? "openModal('joinPrivateModal')" : "showToast('Membuka grup " + gr.name + "...')"}">
+      <div class="grup-cover" style="background:${gradients[i]}">${gr.emoji}</div>
+      <div class="grup-info">
+        <div class="grup-name">${gr.name}</div>
+        <div class="grup-members">👥 ${gr.members} · 📂 ${gr.category}</div>
+        <span class="grup-privacy ${gr.type}">${gr.type==='public'?'🌐 Publik':'🔒 Privat'}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function createGroup() {
+  const name = document.getElementById('newGroupName').value.trim();
+  if (!name) { showToast('Isi nama grup dahulu!'); return; }
+  const type = document.getElementById('newGroupType').value;
+  grupData.unshift({ name, emoji:'🌱', members:'1 anggota', type, cover:'#e8f5e9', category:document.getElementById('newGroupCat').value });
+  closeModal('addGroupModal');
+  document.getElementById('newGroupName').value = '';
+  renderGrup();
+  showToast(`Grup "${name}" berhasil dibuat!`);
+}
+
+function joinPrivate() {
+  const code = document.getElementById('joinCode').value.trim();
+  if (!code) { showToast('Masukkan kode undangan terlebih dahulu!'); return; }
+  closeModal('joinPrivateModal');
+  document.getElementById('joinCode').value = '';
+  if (['TANI2024','PADI123','IRIGASI'].includes(code.toUpperCase())) {
+    showToast('✅ Berhasil bergabung ke grup privat!');
+  } else {
+    showToast('❌ Kode tidak valid. Hubungi admin grup.');
+  }
+}
+
+// ===== SETTINGS =====
+function showSettingsPanel(id, el) {
+  document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.settings-nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('lightThemeBtn').classList.toggle('active', theme==='light');
+  document.getElementById('darkThemeBtn').classList.toggle('active', theme==='dark');
+  showToast(theme==='dark'?'🌙 Mode gelap aktif':'☀️ Mode terang aktif');
+}
+
+function setLang(el, lang) {
+  document.querySelectorAll('.lang-option').forEach(l => l.classList.remove('active'));
+  el.classList.add('active');
+  const msgs = {id:'Bahasa Indonesia dipilih!', jv:'Basa Jawa dipilih, matur nuwun!', en:'English language selected!'};
+  document.getElementById('langMsg').textContent = '✅ ' + msgs[lang];
+  document.getElementById('langMsg').style.display = 'block';
+  setTimeout(() => document.getElementById('langMsg').style.display = 'none', 3000);
+}
+
+// ===== FAQ =====
+function toggleFaq(el) {
+  const ans = el.nextElementSibling;
+  const isOpen = ans.classList.contains('open');
+  document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+  if (!isOpen) ans.classList.add('open');
+}
+
+// ===== SCROLL ANIMATIONS =====
+function animateFadeUps() {
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight - 60) el.classList.add('visible');
+  });
+}
+window.addEventListener('load', () => {
+  setTimeout(animateFadeUps, 100);
+});
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  renderForum();
+  renderProducts();
+  renderCalendar();
+  renderNotes();
+  renderChat();
+  renderGrup();
+  updateClock();
+  setTimeout(animateFadeUps, 200);
+});
+</script>
+</body>
+</html>
